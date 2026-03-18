@@ -1,6 +1,12 @@
 create extension if not exists pgcrypto;
 
-create type public.transaction_type as enum ('WAGE', 'ADVANCE', 'DEDUCTION');
+do $$
+begin
+  create type public.transaction_type as enum ('WAGE', 'ADVANCE', 'DEDUCTION');
+exception
+  when duplicate_object then null;
+end
+$$;
 
 create table if not exists public.employees (
   id uuid primary key default gen_random_uuid(),
