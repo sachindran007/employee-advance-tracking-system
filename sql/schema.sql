@@ -37,6 +37,13 @@ create table if not exists public.transactions (
   )
 );
 
+alter table public.transactions
+drop constraint if exists transactions_employee_id_fkey;
+
+alter table public.transactions
+add constraint transactions_employee_id_fkey
+foreign key (employee_id) references public.employees(id) on delete cascade;
+
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql

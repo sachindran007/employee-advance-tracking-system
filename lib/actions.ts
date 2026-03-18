@@ -150,6 +150,16 @@ export async function deleteEmployeeAction(id: string): Promise<ActionResult> {
   await requireAdmin();
   const adminClient = getAdminClient();
 
+  // Support older databases where the foreign key was created without ON DELETE CASCADE.
+  const { error: transactionsError } = await adminClient
+    .from("transactions")
+    .delete()
+    .eq("employee_id", id);
+
+  if (transactionsError) {
+    return actionError(transactionsError.message);
+  }
+
   const { error } = await adminClient.from("employees").delete().eq("id", id);
 
   if (error) {
