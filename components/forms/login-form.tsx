@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 import { signInAction } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormField } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
 
@@ -47,9 +47,6 @@ export function LoginForm({ message }: { message?: string }) {
     <Card className="w-full max-w-md">
       <CardHeader>
         <CardTitle>Admin login</CardTitle>
-        <CardDescription>
-          Sign in with an approved Supabase admin account to manage employee records and transactions.
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>

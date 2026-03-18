@@ -44,7 +44,6 @@ export async function middleware(request: NextRequest) {
   if (!user && !isPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("message", "Please sign in to continue.");
     return NextResponse.redirect(url);
   }
 
