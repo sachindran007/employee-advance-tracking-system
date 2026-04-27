@@ -52,7 +52,7 @@ export function TransactionForm({
         transactionType: "WAGE",
         amount: 0,
         bricksProduced: 0,
-        rateUsed: employees[0]?.default_rate ?? 0,
+        rateUsed: employees[0] && employees[0].default_rate > 0 ? employees[0].default_rate : 120,
         notes: ""
       } satisfies TransactionFormValues)
   });
@@ -120,7 +120,7 @@ export function TransactionForm({
                 employeeField.onChange(event);
                 const employee = employees.find((item) => item.id === event.target.value);
                 if (employee && transactionType === "WAGE" && !hasManuallyEditedRate.current) {
-                  form.setValue("rateUsed", employee.default_rate);
+                  form.setValue("rateUsed", employee.default_rate > 0 ? employee.default_rate : 120);
                 }
               }}
             >
@@ -153,7 +153,12 @@ export function TransactionForm({
                 transactionTypeField.onChange(event);
                 const nextType = event.target.value as TransactionFormValues["transactionType"];
                 if (nextType === "WAGE" && !hasManuallyEditedRate.current) {
-                  form.setValue("rateUsed", selectedEmployee?.default_rate ?? 0);
+                  form.setValue(
+                    "rateUsed",
+                    selectedEmployee && selectedEmployee.default_rate > 0
+                      ? selectedEmployee.default_rate
+                      : 120
+                  );
                 }
               }}
             >
